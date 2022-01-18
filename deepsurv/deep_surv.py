@@ -1,5 +1,4 @@
 from __future__ import print_function, absolute_import
-from functools import partial
 
 import lasagne
 import numpy
@@ -12,7 +11,7 @@ import theano.tensor as T
 
 from lifelines.utils import concordance_index
 
-from deepsurv_logger import DeepSurvLogger
+from .deepsurv_logger import DeepSurvLogger
 
 from lasagne.regularization import regularize_layer_params, l1, l2
 from lasagne.nonlinearities import rectify,selu
@@ -310,13 +309,9 @@ class DeepSurv:
         )
         partial_hazards = compute_hazards(x)
 
-        where = numpy.argwhere(~numpy.isnan(partial_hazards)).T[0]
-
-        return concordance_index(
-            t[where],
-            partial_hazards[where, 0],
-            e[where]
-        )
+        return concordance_index(t,
+            partial_hazards,
+            e)
 
     def _standardize_x(self, x):
         return (x - self.offset) / self.scale
@@ -511,7 +506,6 @@ class DeepSurv:
                 group.create_dataset(str(idx), data=param)
 
         weights_out = lasagne.layers.get_all_param_values(self.network, trainable=False)
-        print(weights_out)
         if self.updates:
             updates_out = [p.get_value() for p in self.updates.keys()]
         else:
@@ -611,7 +605,7 @@ class DeepSurv:
         x_trt[:,trt_idx] = trt_i
         h_i = self.predict_risk(x_trt)
         # Risk of observations in treatment j
-        x_trt[:, trt_idx] = trt_j
+        x_trt[:,trt_idx] = trt_j;
         h_j = self.predict_risk(x_trt)
 
         rec_ij = h_i - h_j

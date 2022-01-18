@@ -9,4 +9,3 @@
 # Ignore Saving Results
 experiments/results/
 experiments/data/**/logs/
-experiments/data/liver/*
