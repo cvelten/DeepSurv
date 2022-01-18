@@ -3,7 +3,8 @@ FROM cv1s10n/dl-docker:cpu
 COPY . / 
 
 CMD [ "python", "-u", "/scripts/rsf_run.py", \
-"/shared/data/metabric_IHC4_clinical_train_test.h5", \
+"/shared/data/LiverInputOverallSurvSimpleAll.hd5", \
 "--results_dir", "/shared/results/", \
-"--num_trees", "100" \
+"--num_trees", "100", \
+"--treatment_idx", "0"\
 ]

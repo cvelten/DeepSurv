@@ -3,6 +3,6 @@ FROM cv1s10n/dl-docker:cpu
 COPY . /
 
 CMD [ "python", "-u", "/scripts/cph_run.py", \
-"gaussian", \
-"/shared/data/gaussian_survival_data.h5", \
+"liver", \
+"/shared/data/LiverInputOverallSurvSimpleAll.hd5", \
 "--results_dir", "/shared/results/"]
