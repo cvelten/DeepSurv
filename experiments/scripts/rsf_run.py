@@ -98,6 +98,8 @@ def save_treatment_rec_visualizations(model, dataset, output_dir, trt_idx = None
     output_file = os.path.join(output_dir, '_'.join(['rsf', TIMESTRING,'rec_surv.pdf']))
     viz.plot_survival_curves(experiment_name = 'RSF', output_file=output_file, **rec_dict)
 
+    np.save(f'{output_file.replace(".pdf","")}_rec_dict', rec_dict)
+
 def save_model(model, output_dir):
     # TODO this currently breaks
     save_R = robjects.r('save')
