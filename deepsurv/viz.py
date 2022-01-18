@@ -150,7 +150,7 @@ def plot_experiment_scatters(risk_fxn, dataset, norm_vals = None, output_file=No
 
 def plot_survival_curves(rec_t, rec_e, antirec_t, antirec_e, experiment_name = '', output_file = None):
     # Set-up plots
-    plt.figure(figsize=(12,3))
+    plt.figure(figsize=(8, 8))
     ax = plt.subplot(111)
 
     # Fit survival curves
@@ -161,8 +161,8 @@ def plot_survival_curves(rec_t, rec_e, antirec_t, antirec_e, experiment_name = '
     kmf.plot(ax=ax,linestyle="--")
     
     # Format graph
-    plt.ylim(0,1);
-    ax.set_xlabel('Timeline (months)',fontsize='large')
+    plt.ylim(0, 1)
+    ax.set_xlabel('Timeline (years)', fontsize='large')
     ax.set_ylabel('Percentage of Population Alive',fontsize='large')
     
     # Calculate p-value
