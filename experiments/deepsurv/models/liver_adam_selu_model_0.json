@@ -1,0 +1,14 @@
+{
+	"batch_norm": false,
+	"activation": "selu",
+	"standardize": true,
+	"learning_rate": 0.00027946545051377414,
+	"lr_decay": 0.00079583984375,
+	"momentum": 0.8851513671875,
+	"L2_reg": 0.3331748046874999,
+	"dropout": 0.009267578125000002,
+	"hidden_layers_sizes": [
+		11
+	],
+	"n_in": 13
+}
