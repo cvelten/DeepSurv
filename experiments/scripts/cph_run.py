@@ -39,10 +39,12 @@ def parse_args():
 def evaluate_model(model, dataset, bootstrap = False):
     def ci(model):
         def cph_ci(x, t, e, **kwargs):
+            predicted_hazard = -model.predict_partial_hazard(x)
+            where = np.where(~np.isnan(predicted_hazard.values))
             return concordance_index(
-                event_times= t, 
-                predicted_event_times= -model.predict_partial_hazard(x), 
-                event_observed= e,
+                event_times=t[where],
+                predicted_scores=predicted_hazard.iloc[where],
+                event_observed=e[where],
             )
         return cph_ci
 
@@ -121,10 +123,9 @@ if __name__ == '__main__':
     print("Training CPH Model")
     train_df = utils.format_dataset_to_df(datasets['train'], DURATION_COL, EVENT_COL)
     cf = CoxPHFitter()
-    results = cf.fit(train_df, duration_col=DURATION_COL, event_col=EVENT_COL, 
-        include_likelihood=True)
+    results = cf.fit(train_df, duration_col=DURATION_COL, event_col=EVENT_COL)
     cf.print_summary()
-    print("Train Likelihood: " + str(cf._log_likelihood))
+    print("Train Likelihood: " + str(cf.log_likelihood_))
 
     if 'valid' in datasets:
         metrics = evaluate_model(cf, datasets['valid'])
