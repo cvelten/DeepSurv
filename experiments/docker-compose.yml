@@ -1,26 +1,40 @@
-cph:
-  build: ./cph
-  dockerfile: Dockerfile.${EXPERIMENT}
-  volumes:
-    - ../deepsurv:/DeepSurv/deepsurv
-    - ./scripts:/scripts
-    - ./data/${EXPERIMENT}:/shared/data
-    - ./results/${EXPERIMENT}:/shared/results
+version: "3.8"
 
-deepsurv:
-  build: ./deepsurv
-  dockerfile: Dockerfile.${EXPERIMENT}
-  volumes:
-    - ../deepsurv:/DeepSurv/deepsurv
-    - ./scripts:/scripts
-    - ./data/${EXPERIMENT}:/shared/data
-    - ./results/${EXPERIMENT}:/shared/results
+services:
 
-rsf:
-  build: ./rsf
-  dockerfile: Dockerfile.${EXPERIMENT}
-  volumes:
-    - ../deepsurv:/DeepSurv/deepsurv
-    - ./scripts:/scripts
-    - ./data/${EXPERIMENT}:/shared/data
-    - ./results/${EXPERIMENT}:/shared/results
+  cph:
+    build: 
+      context: ./cph
+      dockerfile: Dockerfile.${EXPERIMENT}
+    volumes:
+      - ../deepsurv:/DeepSurv/deepsurv
+      - ./scripts:/scripts
+      - ./data/${EXPERIMENT}:/shared/data
+      - ./results/${EXPERIMENT}:/shared/results
+
+  deepsurv:
+    build: 
+      context: ./deepsurv
+      dockerfile: Dockerfile.${EXPERIMENT}
+    volumes:
+      - ../deepsurv:/DeepSurv/deepsurv
+      - ./scripts:/scripts
+      - ./data/${EXPERIMENT}:/shared/data
+      - ./results/${EXPERIMENT}:/shared/results
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['1']
+              capabilities: [gpu]
+
+  rsf:
+    build:
+      context: ./rsf
+      dockerfile: Dockerfile.${EXPERIMENT}
+    volumes:
+      - ../deepsurv:/DeepSurv/deepsurv
+      - ./scripts:/scripts
+      - ./data/${EXPERIMENT}:/shared/data
+      - ./results/${EXPERIMENT}:/shared/results
