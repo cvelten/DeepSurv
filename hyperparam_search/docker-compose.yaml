@@ -1,6 +1,10 @@
+version: "3.8"
+
 services:
   hp_search:
-    build: .
+    build:
+      context: ./
+      dockerfile: Dockerfile
     volumes:
       - ../deepsurv/:/deepsurv
       - ./logs:/shared/logs
