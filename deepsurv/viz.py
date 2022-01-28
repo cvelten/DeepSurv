@@ -162,7 +162,7 @@ def plot_survival_curves(rec_t, rec_e, antirec_t, antirec_e, experiment_name = '
     
     # Format graph
     plt.ylim(0, 1)
-    plt.xlim(0, 5)
+    # plt.xlim(0, 5)
     ax.set_xlabel('Timeline (years)', fontsize='large')
     ax.set_ylabel('Percentage of Population Alive',fontsize='large')
     
