@@ -7,7 +7,6 @@
 .cache/
 
 # Ignore Saving Results
-hyperparam_search/**/*
 experiments/results/
 experiments/data/**/logs/
 experiments/data/liver*

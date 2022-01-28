@@ -1,0 +1,14 @@
+FROM cv1s10n/dl-docker:cpu
+
+COPY . /
+
+RUN pip --no-cache-dir install optunity
+
+CMD [ "python", "-u", "/hyperparam_search.py", \
+"/shared/logs", \
+"/shared/data/liver_pfs_sbrtORrfa/220123Liver-PFS_TxSBRTRFAvsNONE.hd5", \
+"/box_constraints.0.json", \
+"50", \
+"--update_fn", "adam", \
+"--num_epochs", "500", \
+"--num_fold", "3" ]

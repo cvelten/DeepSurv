@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  hp_search:
+    build:
+      context: ./
+      dockerfile: Dockerfile_pfs_sbrtORrfa
+    volumes:
+      - ../deepsurv/:/deepsurv
+      - ./logs:/shared/logs
+      - ../experiments/data/:/shared/data
