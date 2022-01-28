@@ -6,6 +6,7 @@ import numpy
 import time
 import json
 import h5py
+import os
 
 import theano
 import theano.tensor as T
@@ -499,6 +500,8 @@ class DeepSurv:
         return json.dumps(self.hyperparams)
 
     def save_model(self, filename, weights_file = None):
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+
         with open(filename, 'w') as fp:
             fp.write(self.to_json())
 
@@ -521,6 +524,7 @@ class DeepSurv:
         # We store the parameter under the index in the list
         # so that when we read it later, we can construct the list of
         # parameters in the same order they were saved
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
         with h5py.File(filename, 'w') as f_out:
             weights_grp = f_out.create_group('weights')
             save_list_by_idx(weights_grp, weights_out)
