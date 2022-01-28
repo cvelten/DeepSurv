@@ -1,0 +1,8 @@
+FROM cv1s10n/dl-docker:cpu
+
+COPY . /
+
+CMD [ "python", "-u", "/scripts/cph_run.py", \
+"liver", \
+"/shared/data/220123Liver-OS_TxSBRT-OR-RFA.hd5", \
+"--results_dir", "/shared/results/"]
