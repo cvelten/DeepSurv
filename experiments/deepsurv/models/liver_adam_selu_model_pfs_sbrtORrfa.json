@@ -1,15 +1,1 @@
-{
-	"batch_norm": false,
-	"activation": "selu",
-	"standardize": true,
-	"learning_rate": 0.000001095,
-	"lr_decay": 0.000154854,
-	"momentum": 0.93373291,
-	"L2_reg": 2.223504395,
-	"dropout": 0.357797852,
-	"hidden_layers_sizes": [
-		6,
-		6
-	],
-	"n_in": 14
-}
+{"batch_norm":false,"activation":"selu","standardize":true,"learning_rate":0.0006740792,"lr_decay":0.0002641016,"momentum":0.8361347656,"L2_reg":3.9224082031,"dropout":0.1823242188,"hidden_layers_sizes":[12,12]}
