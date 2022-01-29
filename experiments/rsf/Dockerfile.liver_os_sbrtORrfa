@@ -3,7 +3,7 @@ FROM cv1s10n/dl-docker:cpu
 COPY . / 
 
 CMD [ "python", "-u", "/scripts/rsf_run.py", \
-"/shared/data/220123Liver-OS_TxSBRTorRFA.hd5", \
+"/shared/data/220123Liver-OS_TxSBRTRFAvsNONE.hd5", \
 "--results_dir", "/shared/results/", \
 "--num_trees", "100", \
 "--treatment_idx", "0"\
