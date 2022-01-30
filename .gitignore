@@ -10,6 +10,6 @@
 hyperparam_search/log*
 hyperparam_search/2022*
 hyperparam_search/*tar*
-experiments/results/
+experiments/results*
 experiments/data/**/logs/
 experiments/data/liver*
