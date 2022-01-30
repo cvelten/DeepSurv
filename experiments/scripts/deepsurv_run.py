@@ -110,8 +110,8 @@ def save_treatment_risk_data(model, dataset, output_dir,
 
     rec_trt = model.recommend_treatment(dataset['x'], trt_i, trt_j, trt_idx)
 
-    colnames = ['cTxt'] + [f'c{i}' for i in range(datasets['x'].shape[1]-1)] + ['TxtRec']
-    rec_df = pd.DataFrame(np.append(datasets['train']['x'], rec_trt, axis=1), columns=colnames)
+    colnames = ['cTxt'] + [f'c{i}' for i in range(dataset['x'].shape[1]-1)] + ['TxtRec']
+    rec_df = pd.DataFrame(np.append(dataset['train']['x'], rec_trt, axis=1), columns=colnames)
 
     output_file = os.path.join(output_dir, '_'.join(['deepsurv', TIMESTRING, 'rec_surv.csv']))
     print(output_file)
