@@ -5,7 +5,7 @@ COPY . /
 CMD [ "python", "-u", "/scripts/deepsurv_run.py", \
 "liver", \
 "/models/liver_adam_selu_model_pfs_sbrtORrfa.json", \
-"/shared/data/220123Liver-PFS_TxSBRT-OR-RFA.hd5", \
+"/shared/data/220123Liver-PFS_TxSBRTorRFA.hd5", \
 "--update_fn", "adam", \
 "--treatment_idx", "0", \
 "--results_dir", "/shared/results/", \
