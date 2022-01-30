@@ -105,6 +105,19 @@ def save_treatment_rec_visualizations(model, dataset, output_dir,
     np.save(f'{output_file.replace(".pdf","")}_rec_dict', rec_dict)
 
 
+def save_treatment_risk_data(model, dataset, output_dir,
+                             trt_i=1, trt_j=0, trt_idx=0):
+
+    rec_trt = model.recommend_treatment(dataset['x'], trt_i, trt_j, trt_idx)
+
+    colnames = ['cTxt'] + [f'c{i}' for i in range(datasets['x'].shape[1]-1)] + ['TxtRec']
+    rec_df = pd.DataFrame(np.append(datasets['train']['x'], rec_trt, axis=1), columns=colnames)
+
+    output_file = os.path.join(output_dir, '_'.join(['deepsurv', TIMESTRING, 'rec_surv.csv']))
+    print(output_file)
+    rec_df.to_csv(output_file, index=False)
+
+
 def save_model(model, output_file):
     model.save_weights(output_file)
 
@@ -169,6 +182,9 @@ if __name__ == '__main__':
         # We use the test dataset because these experiments don't have a viz dataset
         save_treatment_rec_visualizations(model, test_dataset, output_dir=args.results_dir,
                                           trt_idx=args.treatment_idx)
+        print("Calculating log hazard ratio differences and saving as CSV")
+        save_treatment_risk_data(model, test_dataset, output_dir=args.results_dir,
+                                 trt_idx=args.treatment_idx)
 
     if args.results_dir:
         _, model_str = os.path.split(args.model)

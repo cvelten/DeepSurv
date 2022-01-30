@@ -520,6 +520,8 @@ class DeepSurv:
         else:
             raise Exception("Model has not been trained: no params to save!")
 
+        if filename is None:
+            return weights_out
         # Store all of the parameters in an hd5f file
         # We store the parameter under the index in the list
         # so that when we read it later, we can construct the list of
@@ -536,6 +538,8 @@ class DeepSurv:
         def load_all_keys(fp):
             results = []
             for key in fp:
+                if not fp[key].shape:
+                    continue
                 dataset = fp[key][:]
                 results.append((int(key), dataset))
             return results
