@@ -105,13 +105,14 @@ def save_treatment_rec_visualizations(model, dataset, output_dir,
     np.save(f'{output_file.replace(".pdf","")}_rec_dict', rec_dict)
 
 
-def save_treatment_risk_data(model, dataset, output_dir,
+def save_treatment_risk_data(model, dataset, norm_vals, output_dir,
                              trt_i=1, trt_j=0, trt_idx=0):
 
     rec_trt = model.recommend_treatment(dataset['x'], trt_i, trt_j, trt_idx)
 
     colnames = ['cTxt'] + [f'c{i}' for i in range(dataset['x'].shape[1]-1)] + ['TxtRec']
-    rec_df = pd.DataFrame(np.append(dataset['x'], rec_trt, axis=1), columns=colnames)
+    rec_df = pd.DataFrame(np.append(dataset['x'] * norm_vals['std'] +
+                          norm_vals['mean'], rec_trt, axis=1), columns=colnames)
 
     output_file = os.path.join(output_dir, '_'.join(['deepsurv', TIMESTRING, 'rec_surv.csv']))
     print(output_file)
@@ -183,8 +184,8 @@ if __name__ == '__main__':
         save_treatment_rec_visualizations(model, test_dataset, output_dir=args.results_dir,
                                           trt_idx=args.treatment_idx)
         print("Calculating log hazard ratio differences and saving as CSV")
-        save_treatment_risk_data(model, test_dataset, output_dir=args.results_dir,
-                                 trt_idx=args.treatment_idx)
+        save_treatment_risk_data(model, test_dataset, norm_vals=norm_vals,
+                                 output_dir=args.results_dir, trt_idx=args.treatment_idx)
 
     if args.results_dir:
         _, model_str = os.path.split(args.model)
