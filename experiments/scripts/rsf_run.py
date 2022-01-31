@@ -1,24 +1,24 @@
+import os
+import matplotlib
+import viz
+import utils
+import argparse
+from collections import defaultdict
+import pandas as pd
+import numpy as np
+import h5py
+import uuid
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
+import rpy2.robjects as robjects
+from rpy2.robjects.packages import importr
+from rpy2.robjects import pandas2ri
+import logging
+import time
+import rpy2
 import sys
 sys.path.append("/DeepSurv/deepsurv")
 
-import rpy2
-import time
-import logging
-from rpy2.robjects import pandas2ri
-from rpy2.robjects.packages import importr
-import rpy2.robjects as robjects
-from matplotlib.backends.backend_pdf import PdfPages
-import matplotlib.pyplot as plt
-import uuid
-import h5py
-import numpy as np
-import pandas as pd
-from collections import defaultdict
-import argparse
-import utils
-import viz
-import matplotlib
-import os
 
 # Force matplotlib to not use any Xwindows backend.
 matplotlib.use('Agg')
@@ -81,7 +81,7 @@ def rsf_treatment_rec(rfsc, test_tds):
       out.0 <- predict(treefit, x.0)$predicted
       recommended <- max.col(cbind(out.1,out.0))
       recommended <- recommended - 1
-      return(as.factor(recommended))
+    #   return(as.factor(recommended))
     }
     ''')
     tree_rec = robjects.r('tree.recommend')
@@ -105,50 +105,6 @@ def save_treatment_rec_visualizations(model, dataset, output_dir, trt_idx=None):
     viz.plot_survival_curves(experiment_name='RSF', output_file=output_file, **rec_dict)
 
     np.save(f'{output_file.replace(".pdf","")}_rec_dict', rec_dict)
-
-
-def rsf_treatment_risk(rfsc, test_tds):
-    # robjects.r('''
-    # tree.recommend <- function (treefit, x){
-    #   # x is a data frame with a column labeled 'treat';
-    #   #  the treat column is a binary "treatment" with values 0/1
-    #   x.1 <- x
-    #   x.0 <- x
-    #   x.1$treat <- 1
-    #   x.0$treat <- 0
-    #   out.1 <- predict(treefit, x.1)$predicted
-    #   out.0 <- predict(treefit, x.0)$predicted
-    #   recommended <- max.col(cbind(out.1,out.0))
-    #   recommended <- recommended - 1
-    # #   return(as.factor(recommended))
-    # }
-    # ''')
-    # tree_rec = robjects.r('tree.recommend')
-    robjects.r('''
-    tree.predictrisk <- function (treefit, x) {
-        return predict(treefit, x)
-    }
-    ''')
-    tree_risk = robjects.r('tree.predictrisk')
-    rsf_risk = np.array(tree_risk(rfsc, test_tds))
-    print(rsf_risk)
-    return rsf_risk
-
-
-def save_treatment_risk_data(model, dataset, output_dir,
-                             trt_idx=0):
-    tds = utils.format_dataset_to_df(dataset, DURATION_COL, EVENT_COL, trt_idx=trt_idx)
-
-    rec_trt = rsf_treatment_risk(model, tds)
-
-    output_file = os.path.join(output_dir, '_'.join(['rsf', TIMESTRING, 'rec_surv.csv']))
-
-    colnames = ['cTxt'] + [f'c{i}' for i in range(dataset['x'].shape[1]-1)] + ['TxtRec']
-    rec_df = pd.DataFrame(np.append(dataset['x'], rec_trt, axis=1), columns=colnames)
-
-    output_file = os.path.join(output_dir, '_'.join(['rsf', TIMESTRING, 'rec_surv.csv']))
-    print(output_file)
-    rec_df.to_csv(output_file, index=False)
 
 
 def save_model(model, output_dir):
