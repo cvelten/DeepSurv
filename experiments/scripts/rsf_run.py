@@ -188,8 +188,8 @@ if __name__ == '__main__':
         print("Calculating treatment recommendation survival curvs")
         save_treatment_rec_visualizations(rfsc, datasets['test'], output_dir=args.results_dir,
                                           trt_idx=args.treatment_idx)
-        print("Saving treatment risk data")
-        save_treatment_risk_data(rfsc, datasets['test'], output_dir=args.results_dir, trt_idx=args.treatment_idx)
+        # print("Saving treatment risk data")
+        # save_treatment_risk_data(rfsc, datasets['test'], output_dir=args.results_dir, trt_idx=args.treatment_idx)
 
     # Saving models doesn't work
     # if args.results_dir:

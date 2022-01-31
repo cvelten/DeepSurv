@@ -60,7 +60,7 @@ if __name__ == '__main__':
             df.drop(drop_idx, axis='rows', inplace=True)
         df.drop(args.drop, axis='columns', inplace=True)
 
-    print(df)
+    # print(df)
 
     frac = 0.5
 
@@ -77,7 +77,7 @@ if __name__ == '__main__':
     # dataframes = {'train': df, 'test': df, 'valid': df}
     dataframes = {'train': df_train, 'test': df_test}
 
-    print(df_train)
-    print(df_test)
+    # print(df_train)
+    # print(df_test)
 
     dataframes_to_hd5(dataframes, args.ofile, args.event_col, args.time_col)
