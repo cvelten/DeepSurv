@@ -1,3 +1,6 @@
+import sys
+sys.path.append("/DeepSurv/deepsurv")
+
 import rpy2
 import time
 import logging
@@ -15,9 +18,7 @@ import argparse
 import utils
 import viz
 import matplotlib
-import sys
 import os
-sys.path.append("/DeepSurv/deepsurv")
 
 # Force matplotlib to not use any Xwindows backend.
 matplotlib.use('Agg')
