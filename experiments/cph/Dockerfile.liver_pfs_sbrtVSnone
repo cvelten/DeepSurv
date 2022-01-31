@@ -4,5 +4,5 @@ COPY . /
 
 CMD [ "python", "-u", "/scripts/cph_run.py", \
 "liver", \
-"/shared/data/220123Liver-PFS_TxSBRTvsNONE.hd5", \
+"/shared/data/liver_pfs_sbrtVSnone.hd5", \
 "--results_dir", "/shared/results/"]
