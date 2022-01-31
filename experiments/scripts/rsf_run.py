@@ -138,8 +138,7 @@ def save_treatment_risk_data(model, dataset, norm_vals, output_dir,
     output_file = os.path.join(output_dir, '_'.join(['rsf', TIMESTRING, 'rec_surv.csv']))
 
     colnames = ['cTxt'] + [f'c{i}' for i in range(dataset['x'].shape[1]-1)] + ['TxtRec']
-    rec_df = pd.DataFrame(np.append(dataset['x'] * norm_vals['std'] +
-                          norm_vals['mean'], rec_trt, axis=1), columns=colnames)
+    rec_df = pd.DataFrame(np.append(dataset['x'], rec_trt, axis=1), columns=colnames)
 
     output_file = os.path.join(output_dir, '_'.join(['rsf', TIMESTRING, 'rec_surv.csv']))
     print(output_file)
@@ -183,6 +182,8 @@ if __name__ == '__main__':
         print("Calculating treatment recommendation survival curvs")
         save_treatment_rec_visualizations(rfsc, datasets['test'], output_dir=args.results_dir,
                                           trt_idx=args.treatment_idx)
+        print("Saving treatment risk data")
+        save_treatment_risk_data(rfsc, datasets['test'], output_dir=args.results_dir, trt_idx=args.treatment_idx)
 
     # Saving models doesn't work
     # if args.results_dir:
