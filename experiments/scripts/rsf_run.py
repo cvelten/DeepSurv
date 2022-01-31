@@ -1,3 +1,5 @@
+import sys
+sys.path.append("/DeepSurv/deepsurv")
 import os
 import matplotlib
 import viz
@@ -16,8 +18,6 @@ from rpy2.robjects import pandas2ri
 import logging
 import time
 import rpy2
-import sys
-sys.path.append("/DeepSurv/deepsurv")
 
 
 # Force matplotlib to not use any Xwindows backend.
