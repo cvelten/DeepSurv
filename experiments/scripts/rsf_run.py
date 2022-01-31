@@ -81,7 +81,7 @@ def rsf_treatment_rec(rfsc, test_tds):
       out.0 <- predict(treefit, x.0)$predicted
       recommended <- max.col(cbind(out.1,out.0))
       recommended <- recommended - 1
-    #   return(as.factor(recommended))
+      return(as.factor(recommended))
     }
     ''')
     tree_rec = robjects.r('tree.recommend')
@@ -124,8 +124,14 @@ def rsf_treatment_risk(rfsc, test_tds):
     # }
     # ''')
     # tree_rec = robjects.r('tree.recommend')
-    tree_risk = robjects.r('predict(treefit, tds')
+    robjects.r('''
+    tree.predictrisk <- function (treefit, x) {
+        return predict(treefit, x)
+    }
+    ''')
+    tree_risk = robjects.r('tree.predictrisk')
     rsf_risk = np.array(tree_risk(rfsc, test_tds))
+    print(rsf_risk)
     return rsf_risk
 
 
