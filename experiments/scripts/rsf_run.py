@@ -129,7 +129,7 @@ def rsf_treatment_risk(rfsc, test_tds):
     return rsf_risk
 
 
-def save_treatment_risk_data(model, dataset, norm_vals, output_dir,
+def save_treatment_risk_data(model, dataset, output_dir,
                              trt_idx=0):
     tds = utils.format_dataset_to_df(dataset, DURATION_COL, EVENT_COL, trt_idx=trt_idx)
 
